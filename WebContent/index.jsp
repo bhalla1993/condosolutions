@@ -48,11 +48,7 @@ function submitForm()
 	}
 	
 }
-function openRegisterForm()
-{
-var f=document.openRegisterPage;
-f.submit();
-}
+
 </script>
 <style type="text/css">
 .errroMessage
@@ -102,30 +98,20 @@ color:#57b846;
 										<input type="hidden" name="fromWhere" value="proceedLogin"/>
 					
 				</form>
-	<form name="openRegisterPage" action="register" method="post">
+	<form name="forgotPasswordForm" action="forgot" method="post">
 		
 					<ul class="login-more p-t-50">
 						<li class="m-b-8">
 							<span class="txt1">
 								Forgot
 							</span>
-
 							<a href="#" class="txt2">
 								Username / Password?
 							</a>
 						</li>
-
-						<li>
-							<span class="txt1">
-								Do not have an account?
-							</span>
-
-							<a onclick="javascript:openRegisterForm()" class="txt2">
-								Sign up
-							</a>
-						</li>
+						
 					</ul>
-					<input type="hidden" name="fromWhere" value="openRegisterPage"/>
+					<input type="hidden" name="fromWhere" value="forgotPassword"/>
 					</form>
 			</div>
 		</div>

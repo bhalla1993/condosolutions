@@ -129,17 +129,21 @@ updationDate=user.getUpdationDate();
 <div class="textDiv" onclick="javascript:performActions('myProfile')">My Profile</div>
 </div>
 
+
 <div class="secondRoundDivs">
 <div class="imgDiv"><img  src="images/emps.png" alt="AVATAR" title="Employees"></div>
-<div class="textDiv">Employees</div>
+<% if(Constants.ADMIN_USER_NAME.equals(username)){%>
+<div class="textDiv" onclick="javascript:performActions('users')">Employees</div>
+<%}else{ %><div class="textDiv" onclick="javascript:performActions('pageuc')">Colleagues</div><%} %>
 </div>
+
 <div class="secondRoundDivs">
 <div class="imgDiv"><img src="images/locations.png" alt="AVATAR" title="Locations"></div>
 <div class="textDiv" onclick="javascript:performActions('locations')">Locations</div>
 </div>
 <div class="secondRoundDivs">
 <div class="imgDiv"><img src="images/activities.png" alt="AVATAR" title="Actions"></div>
-<div class="textDiv">Actions</div>
+<div class="textDiv" onclick="javascript:performActions('pageuc')">Actions</div>
 </div>
 
 <div class="secondRoundDivs">
@@ -154,6 +158,12 @@ updationDate=user.getUpdationDate();
 
 </form>
 </div>
+
+<div style="width:100%;float:left">
+    <div style="width:100%;border:0px solid brown;text-align:left;float:left" class="textDiv" onclick="javascript:performActions('myProfile')">
+	<span style="margin-left:60px">Hello, <%=fullName%></span>     
+    </div>
+    </div>
 
 <div style="width:100%; float:left;border:0px solid yellow;height:40px;background-color:#57b846;color:white">
 <%@  include file="subMenu.jsp" %>
@@ -173,6 +183,14 @@ if(s=="myProfile")
 if(s=="locations")
 {
 	f.action="locations";
+}
+if(s=="users")
+{
+f.action="users";
+}
+if(s=="pageuc")
+{
+f.action="pageuc";	
 }
 f.submit();
 }

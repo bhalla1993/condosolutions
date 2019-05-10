@@ -21,6 +21,10 @@
 	   <put-attribute name="title" value="Registration Confirmation"/> 
 	   <put-attribute name="body" value="/index.jsp"/> 
 	</definition>
+	<definition name="view-users" template="/layoutmanager.jsp"> 
+	   <put-attribute name="title" value="Users"/> 
+	   <put-attribute name="body" value="/users.jsp"/> 
+	</definition>
 	<!-- User Registration ends -->
    	
 	<definition name="errorPage" template="/layoutmanager.jsp"> 
@@ -49,6 +53,10 @@
 	  <put-attribute name="title" value="Shift Logs"/> 
 	   <put-attribute name="body" value="/userShiftLog.jsp"/> 
 	</definition> 	
+	<definition name="view-all-shift-logs" template="/layoutmanager.jsp">  
+	  <put-attribute name="title" value="Shift Logs"/> 
+	   <put-attribute name="body" value="/shiftLogs.jsp"/> 
+	</definition> 	
 	<!-- User Shift Log ends -->
 	
 	<!-- Locations starts  -->	
@@ -57,4 +65,16 @@
 	   <put-attribute name="body" value="/locations.jsp"/> 
 	</definition> 	
 	<!-- Locations ends -->	
+	
+	
+	
+	
+	<!--Under Constructor Page starts  -->	
+	<definition name="under-construction" template="/layoutmanager.jsp">  
+	  <put-attribute name="title" value="Page Under Construction"/> 
+	   <put-attribute name="body" value="/underConstruction.jsp"/> 
+	</definition> 	
+	<!-- Under Constructor Page  ends -->	
+	
+	
 </tiles-definitions>

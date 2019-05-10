@@ -55,8 +55,6 @@ public class UserAction extends ActionSupport
 			}
 			
 		
-		boolean userExists=false;
-
 		
 		username=request.getParameter("username");
 		password=request.getParameter("password");

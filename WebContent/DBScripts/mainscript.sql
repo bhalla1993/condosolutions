@@ -18,9 +18,10 @@ UNIQUE(USERNAME)
 
 ALTER TABLE USER ADD COLUMN CREATION_DATE timestamp default current_timestamp;
 ALTER TABLE USER ADD COLUMN UPDATION_DATE timestamp;
+ALTER TABLE USER ADD COLUMN ACTIVATE varchar(1) DEFAULT 'Y';
 
-insert into USER values(1,'shiva','shiva123','Shiva','Bhalla','M','2019-05-01','shiva.bhalla@gmail.com','4379878669','Brampton',now(),now());
-insert into USER values(2,'adm','admin123','Admin','','M','2019-05-01','admin@gmail.com','4379878669','Markham',now(),now());
+insert into USER values(1,'shiva','shiva123','Shiva','Bhalla','M','2019-05-01','shiva.bhalla@gmail.com','4379878669','Brampton',now(),now(),'Y');
+insert into USER values(2,'adm','admin123','Admin','','M','2019-05-01','admin@gmail.com','4379878669','Markham',now(),now(),'Y');
 
 CREATE TABLE USER_SHIFT_LOGS(
 ID int NOT NULL PRIMARY KEY auto_increment,

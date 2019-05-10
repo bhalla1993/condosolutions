@@ -1,21 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.condosolutions.beans.User" %>
+<%@ page import="java.util.HashMap" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Home</title>
 <script type="text/javascript">
-function performAction(s)
+function userAction(uName,action)
 {
-var f=document.myForm;
+var f=document.actionForm;
 
-if(s=="myProfile")
+if(action=="edit")
 {
-f.action="home";	
+	
+	f.forEdit.value="yes";
+	f.userForEdit.value=uName;
+	f.fromProfile.value="yes";
+	f.submit();	
 }
-f.submit();		
+
 }
 </script>
 <style type="text/css">
@@ -76,50 +81,46 @@ margin-top:10px;
 </head>
 <body>
 <%
-User user=null;
+String username="",firstName="",lastName="",fullName="",dob="",email="",sex="",phone="",address="",creationDate="",updationDate="",isActivate="";
+HashMap<String,User> userMap=(HashMap<String,User>)request.getAttribute("userMap");
+System.out.println("UserMap is: "+userMap);
 
-String username="",firstName="",lastName="",fullName="",dob="",email="",sex="",phone="",address="",creationDate="",updationDate="";
-
-int id=0;
+if(userMap.size()>0)
+{
+	for(int i=0;i<userMap.size();i++)
+	{
+	User u=userMap.get(i+"");
 	
-if(session.getAttribute("user")!=null)
-{
-user=(User)session.getAttribute("user");
+	username=u.getUsername();
+	firstName=u.getFirstName();
+	lastName=u.getLastName();
+	fullName=u.getFullName();
+	sex=u.getSex();
+	dob=u.getDateOfBirth();
+	email=u.getEmail();
+	phone=u.getPhone();
+	address=u.getAddress();
+	creationDate=u.getCreationDate();
+	updationDate=u.getUpdationDate();
+	isActivate=u.getIsActivate();
+	}
 }
 
-if(user!=null)
-{
-username=user.getUsername();
-firstName=user.getFirstName();
-lastName=user.getLastName();
-fullName=user.getFullName();
-sex=user.getSex();
-
-if("M".equals(sex))
-	sex="Male";
-else if("F".equals(sex))
-	sex="Female";
-
-email=user.getEmail();
-phone=user.getPhone();
-dob=user.getDateOfBirth();
-address=user.getAddress();
-creationDate=user.getCreationDate();
-updationDate=user.getUpdationDate();
-}
 %>
-
-<div style="width:100%;border-bottom:0.5px solid grey;">
-<p style="margin:5px;font-family: sans-serif;font-style: italic;font-weight:lighter;">
-  <a onclick="javascript:performAction('myProfile')" style="margin-left:15px;text-decoration:underline;cursor:pointer">My Profile</a> > <%=fullName%>
-</p> 
-</div>
-
 <div id="outerDiv">
 <div class="rows">
 <h3  style="text-align:center;">Profile: <%=fullName%></h3>
 </div>
+<div style="height:30px;float:left;width:100%;">
+<div style="width:100%;float:right;margin-top:10px;font-weight:bolder;">
+<span style="color:green" id="msg">
+<%if(request.getAttribute("message")!=null){%><%=request.getAttribute("message")%><%}%>
+</span>
+</div>
+</div>
 
+
+	<%if(userMap.size()>0){ %>
 	<table id="locations" border="1" class="key-value-table">
 	<tbody>
 	<tr><th>Username:</th><td><%=username%></td></tr>	
@@ -130,21 +131,35 @@ updationDate=user.getUpdationDate();
 	<tr><th>Email:</th><td><%=email%></td></tr>	
 	<tr><th>Phone:</th><td><%=phone%></td></tr>	
 	<tr><th>Address:</th><td><%=address%></td></tr>	
+	<tr><th>Activate:</th><td><%=isActivate%></td></tr>	
 	<tr><th>Added On:</th><td><%=creationDate%></td></tr>	
 	<tr><th>Last Modified On:</th><td><%=updationDate%></td></tr>	
+	
 	</tbody>
 	</table>
+	
+	<form name="actionForm" method="post" action="register">
+	<input type="hidden" name="fromWhere" value="openRegisterPage"/>
+	<input type="hidden" name="forEdit" value=""/>
+	<input type="hidden" name="fromProfile" value=""/>
+	<input type="hidden" name="userForEdit" value=""/>
+	
 	<div>
-	<input type="submit" name="submit" value="Update Profile" onclick="javascript:return updateProfile()"/>
-	<input style="margin-left:10px;" type="submit" name="cancel" value="Cancel" onclick="javascript:return cancelForm()"/>	
+	<input type="submit" name="submit" value="Update Profile" onclick="javascript:return userAction('<%=username%>','edit')"/>
 	</div>
+	</form>
+	<%} %>
   
 </div>
 
-<form action="" name="myForm" method="post">
-<input type="hidden" name="fromWhere" value="showProfile"/>
-</form>
-
-
 </body>
+<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script>
+setTimeout(function() {
+	 $('#msg').fadeOut();
+	 
+	}, 3000 );
+</script>
 </html>

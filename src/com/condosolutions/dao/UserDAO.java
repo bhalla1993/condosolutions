@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import com.condosolutions.utils.StringUtils;
 
 import freemarker.template.utility.StringUtil;
+import java.util.HashMap;
+
 /**
  * 
  * @author Shiva Bhalla
@@ -79,6 +81,93 @@ public class UserDAO
 		}
 		return user;
 	}
+	public HashMap<String,User> getAllUsers()
+	{
+		return getAllUsers(null);
+	}
+	public HashMap<String,User> getAllUsers(String username)
+	{
+		return getAllUsers(username,null,null);
+	}
+	public HashMap<String,User> getAllUsers(String username,String filterName,String filterDate)
+	{
+		StringBuffer query=new StringBuffer("select ID,USERNAME,FIRST_NAME,LAST_NAME,SEX,DATE_OF_BIRTH,EMAIL,PHONE,ADDRESS,CREATION_DATE,UPDATION_DATE,ACTIVATE from USER WHERE 1=1 ");
+		User user=null;
+		HashMap<String,User> userMap=new HashMap<String,User>();
+		
+		if(StringUtils.isValidString(username))
+		{
+			query.append(" AND USERNAME='"+username+"'");
+		}
+		if(StringUtils.isValidString(filterName))
+		{
+			query.append(" AND FIRST_NAME LIKE '%"+filterName+"%' OR LAST_NAME LIKE '%"+filterName+"%'");
+		}
+		if(StringUtils.isValidString(filterDate))
+		{
+			query.append(" AND DATE(CREATION_DATE)='"+filterDate+"'");
+		}
+		System.out.println("Query for user:"+query);
+		
+		try 
+		{
+			statement=con.createStatement();
+			resultSet=statement.executeQuery(query.toString());
+			int i=0;
+			while(resultSet.next())
+			{
+				user=new User();
+				user.setID(Integer.parseInt(resultSet.getString("ID")));
+				user.setUsername(resultSet.getString("USERNAME"));
+				user.setFirstName(resultSet.getString("FIRST_NAME"));
+				user.setLastName(resultSet.getString("LAST_NAME"));
+			
+				StringBuffer fullName=new StringBuffer(user.getFirstName());
+				if(StringUtils.isValidString(user.getLastName()))
+				{
+					fullName.append(" ").append(user.getLastName());
+				}
+				
+				user.setFullName(fullName.toString());
+				user.setSex(resultSet.getString("SEX"));
+				user.setDateOfBirth(resultSet.getString("DATE_OF_BIRTH"));
+				user.setEmail(resultSet.getString("EMAIL"));
+				user.setPhone(resultSet.getString("PHONE"));
+				user.setAddress(resultSet.getString("ADDRESS"));
+				user.setCreationDate(resultSet.getString("CREATION_DATE"));
+				user.setUpdationDate(resultSet.getString("UPDATION_DATE"));
+				user.setIsActivate(resultSet.getString("ACTIVATE"));
+				
+				userMap.put(i+"", user);
+				i++;
+			}
+		}
+		 catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Exception while creating statement from connection in isValidUser method of UserDAO "+e.getMessage());
+		}		
+		return userMap;
+	}
+	public int updateUser(String firstName,String lastName,String sex,String dob,String email,String phone,String address,String userForEdit) 
+	{
+		int res=0;
+		StringBuffer query=new StringBuffer("UPDATE USER SET FIRST_NAME='"+firstName+"',LAST_NAME='"+lastName+"',SEX='"+sex+"',DATE_OF_BIRTH='"+dob+"',EMAIL='"+email+"',PHONE='"+phone+"',ADDRESS='"+address+"',UPDATION_DATE=now() WHERE 1=1 ");
+		query.append(" AND USERNAME='"+userForEdit+"' ");
+		
+		System.out.println("Update Query is: "+query);
+		try 
+		{
+			statement=con.createStatement();
+			res=statement.executeUpdate(query.toString());
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Exception while creating statement from connection in updateUser  User method of UserDAO "+e.getMessage());
+		}
+		
+		return res;
+		
+	}
 	public int insertUser(String username,String password,String firstName,String lastName,String sex,String dob,String email,String phone,String address) 
 	{
 		int res=0;
@@ -88,7 +177,7 @@ public class UserDAO
 		System.out.println("Query is: "+query);
 		
 		try 
-		{
+		{ 
 			statement=con.createStatement();
 			res=statement.executeUpdate(query.toString());
 		}

@@ -5,7 +5,16 @@ import com.condosolutions.utils.StringUtils;
 public class User {
 	
 	private int ID;
+	private String isActivate;
 	
+	public String getIsActivate() {
+		return isActivate;
+	}
+
+	public void setIsActivate(String isActivate) {
+		this.isActivate = isActivate;
+	}
+
 	public int getID() {
 		return ID;
 	}
@@ -15,11 +24,12 @@ public class User {
 	}
 
 	
-	public User(int iD, String username, String password, String firstName, String fullName, String dateOfBirth,
-			String sex, String email, String phone, String address, String creationDate, String updationDate,
-			String lastName) {
+	public User(int iD, String isActivate, String username, String password, String firstName, String fullName,
+			String dateOfBirth, String sex, String email, String phone, String address, String creationDate,
+			String updationDate, String lastName) {
 		super();
 		ID = iD;
+		this.isActivate = isActivate;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;

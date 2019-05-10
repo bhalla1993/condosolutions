@@ -1,6 +1,9 @@
 package com.condosolutions.actions;
 
 import com.opensymphony.xwork2.ActionSupport;
+
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,9 +43,31 @@ public class RegisterAction extends ActionSupport {
 			}
 			
 		fromWhere=request.getParameter("fromWhere");
+		UserDAO userDAO=UserManager.getInstance().getUserDAO();
+
 		
 		if("openRegisterPage".equals(fromWhere))
 		{
+			System.out.println("From profile : "+request.getParameter("fromProfile"));
+			System.out.println("For Edit: "+request.getParameter("forEdit"));
+			System.out.println("For user edit: "+request.getParameter("userForEdit"));
+			
+			if(request.getParameter("forEdit")!=null && request.getParameter("userForEdit")!=null)
+			{
+				String forEdit=(String)request.getParameter("forEdit");
+				String userForEdit=(String)request.getParameter("userForEdit");
+				
+				HashMap<String,User> userMap=userDAO.getAllUsers(userForEdit);
+					
+				if(userMap!=null)
+				{
+					request.setAttribute("userForEdit", userMap.get("0"));
+				}
+				if(request.getParameter("fromProfile")!=null)
+					request.setAttribute("fromProfile", request.getParameter("fromProfile"));
+				
+			}
+			
 			returnPage="openRegisterForm";
 		}
 		else if("processRegistration".equals(fromWhere))
@@ -52,6 +77,7 @@ public class RegisterAction extends ActionSupport {
 			
 			username=request.getParameter("username");
 			password=request.getParameter("password");
+			
 			firstName=request.getParameter("firstName");
 			lastName=request.getParameter("lastName");
 			sex=request.getParameter("sex");
@@ -65,11 +91,26 @@ public class RegisterAction extends ActionSupport {
 					+"\tdob"+dob+"\temail:"+email+"\tphone:"+phone+"\taddress:"+address);
 			*/
 			
-			UserDAO userDAO=UserManager.getInstance().getUserDAO();
-			int res=userDAO.insertUser(username, password, firstName, lastName, sex, dob, email, phone, address);
+			int res=0;
 			
+			if("yes".equals(request.getParameter("forEdit")) && request.getParameter("userForEdit")!=null)
+			{
+				String userForEdit=(String)request.getParameter("userForEdit");
+				res=userDAO.updateUser(firstName, lastName, sex, dob, email, phone, address,userForEdit);
+			}
+			else
+			{
+			res=userDAO.insertUser(username, password, firstName, lastName, sex, dob, email, phone, address);
+			}
 			if(res>0)
+			{
+				request.setAttribute("message", "Changes have been saved!");
+
+				if("yes".equals(request.getParameter("fromProfile")))
+					returnPage="profile-success";
+					else
 				returnPage="success";
+			}
 			else
 				returnPage="error";
 			

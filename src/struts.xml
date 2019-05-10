@@ -6,14 +6,15 @@
 
 <action name="authenticate" class="com.condosolutions.actions.UserAction">
 <result name="login" type="chain">login</result>
-<result name="success" type="tiles">home-page</result>
+<result name="success" type="chain">home</result>
 <result name="error" type="tiles">errorPage</result>
 </action>
 
 <action name="register" class="com.condosolutions.actions.RegisterAction">
 <result name="login" type="chain">login</result>
 <result name="openRegisterForm" type="tiles">register-page</result>
-<result name="success" type="tiles">register-confirm</result>
+<result name="success" type="chain">users</result>
+<result name="profile-success" type="chain">home</result>
 <result name="error" type="tiles">errorPage</result>
 </action>
 
@@ -43,6 +44,21 @@
 <result name="success" type="tiles">view-locations</result> 
 </action>
 
+
+<action name="usershiftlogs" class="com.condosolutions.actions.ShiftLogAction">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">view-all-shift-logs</result> 
+</action>
+
+<action name="users" class="com.condosolutions.actions.ViewUsersAction">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">view-users</result> 
+</action>
+
+<action name="pageuc" class="com.condosolutions.actions.PageUnderConstruction">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">under-construction</result> 
+</action>
 
 
 </package>
