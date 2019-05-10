@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE tiles-definitions PUBLIC 
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+
+<tiles-definitions>
+	<!-- User Login starts -->
+	<definition name="login-success" template="/layoutmanager.jsp"> 
+	   <put-attribute name="title" value="Welcome Page"/> 
+	   <put-attribute name="body" value="/login-success.jsp"/> 
+	</definition>   
+	<!-- User Login ends -->
+	
+	<!-- User Registration starts -->
+	<definition name="register-page" template="/layoutmanager.jsp"> 
+	   <put-attribute name="title" value="User Registration"/> 
+	   <put-attribute name="body" value="/register.jsp"/> 
+	</definition>
+	<definition name="register-confirm" template="/layoutmanager.jsp"> 
+	   <put-attribute name="title" value="Registration Confirmation"/> 
+	   <put-attribute name="body" value="/index.jsp"/> 
+	</definition>
+	<!-- User Registration ends -->
+   	
+	<definition name="errorPage" template="/layoutmanager.jsp"> 
+	   <put-attribute name="title" value="Error Page"/> 
+	   <put-attribute name="body" value="/error.jsp"/> 
+	</definition> 
+
+	<definition name="ajaxSearch-returnValue">  
+	   <put-attribute name="body" value="/returnValue.jsp"/> 
+	</definition> 
+	<!-- Home Page starts -->	
+	<definition name="home-page" template="/layoutmanager.jsp">  
+	  <put-attribute name="title" value="Home"/> 
+	   <put-attribute name="body" value="/home.jsp"/> 
+	</definition> 
+	<!-- Home Page ends -->
+
+	<!-- Home Menus/Tiles starts -->
+	<definition name="home-menu" template="/layoutmanager.jsp">  
+	  <put-attribute name="title" value="Home"/> 
+	   <put-attribute name="body" value="/homeMenu.jsp"/> 
+	</definition> 
+	
+	<!-- User Shift Log starts -->
+	<definition name="user-shift-log" template="/layoutmanager.jsp">  
+	  <put-attribute name="title" value="Shift Logs"/> 
+	   <put-attribute name="body" value="/userShiftLog.jsp"/> 
+	</definition> 	
+	<!-- User Shift Log ends -->
+	
+	<!-- Locations starts  -->	
+	<definition name="view-locations" template="/layoutmanager.jsp">  
+	  <put-attribute name="title" value="Locations"/> 
+	   <put-attribute name="body" value="/locations.jsp"/> 
+	</definition> 	
+	<!-- Locations ends -->	
+</tiles-definitions>

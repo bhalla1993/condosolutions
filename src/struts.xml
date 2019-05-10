@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+<package name="abc" extends="tiles-default" namespace="/">
+
+<action name="authenticate" class="com.condosolutions.actions.UserAction">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">home-page</result>
+<result name="error" type="tiles">errorPage</result>
+</action>
+
+<action name="register" class="com.condosolutions.actions.RegisterAction">
+<result name="login" type="chain">login</result>
+<result name="openRegisterForm" type="tiles">register-page</result>
+<result name="success" type="tiles">register-confirm</result>
+<result name="error" type="tiles">errorPage</result>
+</action>
+
+<action name="home" class="com.condosolutions.actions.HomeAction">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">home-page</result>  
+</action>
+
+<action name="login" class="com.condosolutions.actions.LoginAction">
+ <result name="index">/index.jsp</result>  
+</action>
+
+<action name="homeMenu" class="com.condosolutions.actions.HomeMenu">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">home-menu</result>  
+</action>
+
+<action name="shiftLogs" class="com.condosolutions.actions.UserShiftLog">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">user-shift-log</result> 
+<result name="cancel" type="chain">home</result> 
+</action>
+
+
+<action name="locations" class="com.condosolutions.actions.LocationsAction">
+<result name="login" type="chain">login</result>
+<result name="success" type="tiles">view-locations</result> 
+</action>
+
+
+
+</package>
+
+<package name="default" extends="struts-default">  
+<action name="ajaxSearch" class="com.condosolutions.actions.AjaxSearchAction">
+ <result name="success">/returnValue.jsp</result>  
+</action>  
+
+<action name="logout" class="com.condosolutions.actions.LogOutAction">
+ <result name="login" type="chain">loginS</result>
+ <result name="success">/index.jsp</result>  
+</action>
+
+<action name="loginS" class="com.condosolutions.actions.LoginAction">
+ <result name="index">/index.jsp</result>  
+</action>
+
+</package>
+
+
+</struts>    
